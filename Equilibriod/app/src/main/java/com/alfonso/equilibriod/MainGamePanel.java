@@ -16,6 +16,10 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
     private  static final String TAG = MainGamePanel.class.getSimpleName();
     private MainThread thread;
 
+    /**
+     *
+     * @param context
+     */
     public MainGamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
@@ -25,17 +29,32 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
         setFocusable(true);
     }
 
+    /**
+     *
+     * @param holder
+     */
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
         thread.start();
     }
 
+    /**
+     *
+     * @param holder
+     * @param format
+     * @param width
+     * @param height
+     */
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
     }
 
+    /**
+     *
+     * @param holder
+     */
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry =true;
@@ -52,6 +71,11 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
         }
     }
 
+    /**
+     *
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event){
 
@@ -68,6 +92,10 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
         return  super.onTouchEvent(event);
     }
 
+    /**
+     *
+     * @param canvas
+     */
     @Override
     protected  void onDraw(Canvas canvas){
 

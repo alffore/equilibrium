@@ -19,7 +19,6 @@ public class MainThread extends Thread {
     }
 
 
-
     public  MainThread(SurfaceHolder surfaceHolder,MainGamePanel gamePanel){
         super();
         this.surfaceHolder=surfaceHolder;
@@ -40,7 +39,7 @@ public class MainThread extends Thread {
             //pinta el estado a pantalla
         }
 
-        Log.d(TAG, "El loop del juego se ejecuto"+tickCount+" veces");
+        Log.d(TAG, "El loop del juego se ejecuto: "+tickCount+" veces");
     }
 
 }

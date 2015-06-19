@@ -4,16 +4,20 @@ package com.alfonso.equilibriod;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.alfonso.equilibriod.modelo.HModel;
 
 
 public class EBActivity extends Activity {
 
 
     private static final String TAG = EBActivity.class.getSimpleName();
+
+    HModel hm;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,8 @@ public class EBActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(new MainGamePanel(this));
+        //crea el modelo
+        hm = new HModel(this);
 
         Log.d(TAG, "Vista añadida");
     }
