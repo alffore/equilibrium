@@ -9,5 +9,7 @@ public class Nodo {
     public double x;
     public double y;
 
+    //masa del nodo
+    public double m;
 
 }

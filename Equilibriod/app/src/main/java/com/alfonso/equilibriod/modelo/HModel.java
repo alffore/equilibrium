@@ -80,6 +80,7 @@ public class HModel {
         naux.snom=value_split[0];
         naux.x=Double.parseDouble(value_split[1]);
         naux.y=Double.parseDouble(value_split[2]);
+        naux.m=Double.parseDouble(value_split[3]);
 
         return naux;
     }
