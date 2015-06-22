@@ -1,36 +1,60 @@
 package com.alfonso.equilibriod.modelo;
 
-import com.alfonso.equilibriod.modelo.Nodo;
 
 /**
+ * Clase que define un segmento
  * Created by alfonso on 17/06/15.
  */
 public class Segmento {
 
-    public Nodo na;
-    public Nodo nb;
-    public double longitud;
+    public NodoD na;
+    public NodoD nb;
+    public double longitud0;
 
-    public double angulo;
+    public NodoD n;
+
+    private double angulo;
 
     public String snom;
 
+    public double k;
 
-    public Segmento(Nodo na,Nodo nb){
-        this.na=na;
-        this.nb=nb;
-        longitud=-1.0;
-        angulo=0;
+    /**
+     * @param na
+     * @param nb
+     */
+    public Segmento(NodoD na, NodoD nb) {
+        this.na = na;
+        this.nb = nb;
+
+        n = new NodoD();
+
+        actualiza();
+
+        angulo = this.obtenAngulo();
     }
 
-
-
-    public double obtenLongitud(){
-        if(longitud==-1.0){
-            return Math.sqrt(Math.pow(na.x-nb.x,2)+Math.pow(na.y-nb.y,2));
-        }else{
-            return longitud;
-        }
+    public void actualiza() {
+        n.x = nb.x - na.x;
+        n.y = nb.y - na.y;
     }
 
+    /**
+     * @return
+     */
+    public double obtenLongitud() {
+
+        return Math.sqrt(Math.pow(n.x, 2) + Math.pow(n.y, 2));
+
+    }
+
+    /**
+     * Metodo que regresa el angulo del segmento
+     *
+     * @return
+     */
+    public double obtenAngulo() {
+        angulo = Math.acos(n.x / this.obtenLongitud());
+        return angulo;
+    }
 }

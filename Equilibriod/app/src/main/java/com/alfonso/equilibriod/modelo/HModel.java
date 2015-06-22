@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,21 +21,33 @@ public class HModel {
 
     private  static final String TAG = HModel.class.getSimpleName();
 
-    Map mSeg;
-    Map mNod;
+    protected Map mSeg;
+    protected Map mNod;
 
     Context context;
 
     Resources res;
 
+
+
+
+
+    /**
+     *
+     * @param context
+     */
     public HModel(Context context) {
 
         this.context = context;
 
-        mSeg = new HashMap<>();
+        mSeg = new HashMap();
         mNod = new HashMap();
 
+
         res = context.getResources();
+
+
+
         incializaNodos();
         incializaSegmentos();
     }
@@ -53,7 +66,7 @@ public class HModel {
 
             String readString = buffreader.readLine() ;
             while ( readString != null ) {
-                Nodo naux= creaNodo(readString);
+                NodoD naux= creaNodo(readString);
 
                 mNod.put(naux.snom,naux);
 
@@ -72,15 +85,16 @@ public class HModel {
      * @param scadena
      * @return
      */
-    private Nodo creaNodo(String scadena){
-        String[] value_split = scadena.split("\\|");
+    private NodoD creaNodo(String scadena){
+        String[] sv = scadena.split("\\|");
 
-        Nodo naux= new Nodo();
+        NodoD naux= new NodoD();
 
-        naux.snom=value_split[0];
-        naux.x=Double.parseDouble(value_split[1]);
-        naux.y=Double.parseDouble(value_split[2]);
-        naux.m=Double.parseDouble(value_split[3]);
+        naux.snom=sv[0];
+        naux.x=Double.parseDouble(sv[1]);
+        naux.y=Double.parseDouble(sv[2]);
+        naux.m=Double.parseDouble(sv[3]);
+        naux.k=Double.parseDouble(sv[4]);
 
         return naux;
     }
@@ -115,14 +129,16 @@ public class HModel {
 
         String[] sv = scadena.split("\\|");
 
-        Segmento saux = new Segmento((Nodo)mNod.get(sv[1]),(Nodo)mNod.get(sv[2]));
+        Segmento saux = new Segmento((NodoD)mNod.get(sv[1]),(NodoD)mNod.get(sv[2]));
 
         saux.snom=sv[0];
-        saux.longitud=Double.parseDouble(sv[3]);
-        saux.angulo=Double.parseDouble(sv[3])*Math.PI;
+        saux.longitud0=Double.parseDouble(sv[3]);
+        saux.k=Double.parseDouble(sv[3])*Math.PI;
 
         return saux;
     }
+
+
 
 
 }

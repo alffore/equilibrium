@@ -7,7 +7,8 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.alfonso.equilibriod.modelo.HModel;
+
+import com.alfonso.equilibriod.modelo.HModelD;
 
 
 public class EBActivity extends Activity {
@@ -15,7 +16,7 @@ public class EBActivity extends Activity {
 
     private static final String TAG = EBActivity.class.getSimpleName();
 
-    HModel hm;
+    HModelD hm;
 
 
 
@@ -29,7 +30,7 @@ public class EBActivity extends Activity {
 
         setContentView(new MainGamePanel(this));
         //crea el modelo
-        hm = new HModel(this);
+        hm = new HModelD(this);
 
         Log.d(TAG, "Vista añadida");
     }
