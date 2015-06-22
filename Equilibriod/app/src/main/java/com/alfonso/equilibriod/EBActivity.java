@@ -16,7 +16,7 @@ public class EBActivity extends Activity {
 
     private static final String TAG = EBActivity.class.getSimpleName();
 
-    HModelD hm;
+
 
 
 
@@ -30,7 +30,7 @@ public class EBActivity extends Activity {
 
         setContentView(new MainGamePanel(this));
         //crea el modelo
-        hm = new HModelD(this);
+
 
         Log.d(TAG, "Vista añadida");
     }

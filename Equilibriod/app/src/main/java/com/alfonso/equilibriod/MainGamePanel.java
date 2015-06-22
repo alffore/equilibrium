@@ -3,10 +3,13 @@ package com.alfonso.equilibriod;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.alfonso.equilibriod.modelo.HModelD;
 
 /**
  * Created by alfonso on 15/06/15.
@@ -15,6 +18,9 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
     private  static final String TAG = MainGamePanel.class.getSimpleName();
     private MainThread thread;
+
+
+    public HModelD hm;
 
     /**
      *
@@ -27,6 +33,8 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
         thread=new MainThread(getHolder(),this);
 
         setFocusable(true);
+
+        hm = new HModelD(context);
     }
 
     /**
@@ -98,6 +106,7 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
      */
     @Override
     protected  void onDraw(Canvas canvas){
-
+        canvas.drawColor(Color.WHITE);
+        hm.draw(canvas);
     }
 }

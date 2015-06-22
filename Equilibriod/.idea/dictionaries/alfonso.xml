@@ -21,6 +21,7 @@
       <w>escalar</w>
       <w>excepto</w>
       <w>incializa</w>
+      <w>información</w>
       <w>longitud</w>
       <w>masa</w>
       <w>mtodo</w>
@@ -42,6 +43,8 @@
       <w>unitario</w>
       <w>veces</w>
       <w>xesc</w>
+      <w>xuni</w>
+      <w>yuni</w>
     </words>
   </dictionary>
 </component>

@@ -1,7 +1,10 @@
 package com.alfonso.equilibriod;
 
+import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
+import java.util.concurrent.CancellationException;
 
 /**
  * Created by alfonso on 15/06/15.
@@ -18,7 +21,11 @@ public class MainThread extends Thread {
         this.running=running;
     }
 
-
+    /**
+     *
+     * @param surfaceHolder
+     * @param gamePanel
+     */
     public  MainThread(SurfaceHolder surfaceHolder,MainGamePanel gamePanel){
         super();
         this.surfaceHolder=surfaceHolder;
@@ -28,15 +35,33 @@ public class MainThread extends Thread {
 
     @Override
     public void run(){
-
+        Canvas canvas;
         long tickCount =0L;
+        double h=0.001;
 
         Log.d(TAG, "Empezando el loop del juego");
 
         while(running){
-            tickCount++;
-            //actualiza el estado
-            //pinta el estado a pantalla
+            canvas=null;
+            try {
+                tickCount++;
+                canvas = this.surfaceHolder.lockCanvas();
+                synchronized (surfaceHolder) {
+
+
+                    //actualiza el estado
+                    this.gamePanel.hm.calPos(h);
+
+                    //pinta el estado a pantalla
+                    this.gamePanel.onDraw(canvas);
+                }
+            }finally {
+                //en caso de excepcion la superficie
+                if(canvas != null) {
+                    surfaceHolder.unlockCanvasAndPost(canvas);
+                }
+            }
+
         }
 
         Log.d(TAG, "El loop del juego se ejecuto: "+tickCount+" veces");

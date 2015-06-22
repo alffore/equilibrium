@@ -49,7 +49,7 @@ public class Segmento {
     }
 
     /**
-     * Metodo que regresa el angulo del segmento
+     * Metodo que regresa el angulo0 del segmento
      *
      * @return
      */

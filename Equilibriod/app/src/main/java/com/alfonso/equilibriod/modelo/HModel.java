@@ -3,6 +3,9 @@ package com.alfonso.equilibriod.modelo;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 import com.alfonso.equilibriod.R;
 
@@ -10,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +21,7 @@ import java.util.Map;
  */
 public class HModel {
 
-    private  static final String TAG = HModel.class.getSimpleName();
+    private static final String TAG = HModel.class.getSimpleName();
 
     protected Map mSeg;
     protected Map mNod;
@@ -29,11 +31,7 @@ public class HModel {
     Resources res;
 
 
-
-
-
     /**
-     *
      * @param context
      */
     public HModel(Context context) {
@@ -45,7 +43,6 @@ public class HModel {
 
 
         res = context.getResources();
-
 
 
         incializaNodos();
@@ -61,23 +58,71 @@ public class HModel {
 
         try {
             InputStream is = res.openRawResource(R.raw.config_nodo);
-            InputStreamReader isr = new InputStreamReader ( is ) ;
-            BufferedReader buffreader = new BufferedReader ( isr ) ;
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader buffreader = new BufferedReader(isr);
 
-            String readString = buffreader.readLine() ;
-            while ( readString != null ) {
-                NodoD naux= creaNodo(readString);
+            String readString = buffreader.readLine();
+            while (readString != null) {
+                NodoD naux = creaNodo(readString);
 
-                mNod.put(naux.snom,naux);
+                mNod.put(naux.snom, naux);
 
-                readString = buffreader.readLine ( ) ;
+                //Log.d(TAG,readString);
+
+                readString = buffreader.readLine();
             }
 
-            isr.close ( ) ;
+            isr.close();
             is.close();
         } catch (IOException ioe) {
-            ioe.printStackTrace ( ) ;
+            ioe.printStackTrace();
         }
+    }
+
+    /**
+     * @param scadena
+     * @return
+     */
+    private NodoD creaNodo(String scadena) {
+        String[] sv = scadena.split(",");
+
+        NodoD naux = new NodoD();
+
+        naux.snom = sv[0];
+        naux.x = Double.parseDouble(sv[1]);
+        naux.y = Double.parseDouble(sv[2]);
+        naux.m = Double.parseDouble(sv[3]);
+        naux.k = Double.parseDouble(sv[4]);
+        naux.angulo0 =Double.parseDouble(sv[5])*Math.PI;
+
+        return naux;
+    }
+
+    /**
+     *
+     */
+    private void incializaSegmentos() {
+
+        try {
+            InputStream is = res.openRawResource(R.raw.config_seg);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader buffreader = new BufferedReader(isr);
+
+            String readString = buffreader.readLine();
+            while (readString != null) {
+                Segmento saux = creaSegmento(readString);
+
+                mSeg.put(saux.snom, saux);
+
+                readString = buffreader.readLine();
+            }
+
+            isr.close();
+            is.close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
     }
 
     /**
@@ -85,60 +130,32 @@ public class HModel {
      * @param scadena
      * @return
      */
-    private NodoD creaNodo(String scadena){
-        String[] sv = scadena.split("\\|");
+    private Segmento creaSegmento(String scadena) {
 
-        NodoD naux= new NodoD();
+        String[] sv = scadena.split(",");
 
-        naux.snom=sv[0];
-        naux.x=Double.parseDouble(sv[1]);
-        naux.y=Double.parseDouble(sv[2]);
-        naux.m=Double.parseDouble(sv[3]);
-        naux.k=Double.parseDouble(sv[4]);
+        Segmento saux = new Segmento((NodoD) mNod.get(sv[1]), (NodoD) mNod.get(sv[2]));
 
-        return naux;
-    }
-
-
-    private void incializaSegmentos() {
-
-        try {
-            InputStream is = res.openRawResource(R.raw.config_seg);
-            InputStreamReader isr = new InputStreamReader ( is ) ;
-            BufferedReader buffreader = new BufferedReader ( isr ) ;
-
-            String readString = buffreader.readLine() ;
-            while ( readString != null ) {
-                Segmento saux= creaSegmento(readString);
-
-                mSeg.put(saux.snom,saux);
-
-                readString = buffreader.readLine ( ) ;
-            }
-
-            isr.close ( ) ;
-            is.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace ( ) ;
-        }
-
-    }
-
-
-    private Segmento creaSegmento(String scadena){
-
-        String[] sv = scadena.split("\\|");
-
-        Segmento saux = new Segmento((NodoD)mNod.get(sv[1]),(NodoD)mNod.get(sv[2]));
-
-        saux.snom=sv[0];
-        saux.longitud0=Double.parseDouble(sv[3]);
-        saux.k=Double.parseDouble(sv[3])*Math.PI;
+        saux.snom = sv[0];
+        saux.longitud0 = Double.parseDouble(sv[3]);
+        saux.k = Double.parseDouble(sv[3]) * Math.PI;
 
         return saux;
     }
 
+    /**
+     *
+     * @param canvas
+     */
+    public void draw(Canvas canvas){
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
 
+        for(Object oseg: mSeg.values()){
+            Segmento seg=(Segmento) oseg;
 
+            canvas.drawLine((float)seg.na.x,(float)seg.na.y,(float)seg.nb.x,(float)seg.nb.y,paint);
+        }
+    }
 
 }
