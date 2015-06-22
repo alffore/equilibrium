@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 
 import com.alfonso.equilibriod.R;
 
@@ -148,13 +149,18 @@ public class HModel {
      * @param canvas
      */
     public void draw(Canvas canvas){
+
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int w = metrics.widthPixels;
+        int h = metrics.heightPixels;
+
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
 
         for(Object oseg: mSeg.values()){
             Segmento seg=(Segmento) oseg;
 
-            canvas.drawLine((float)seg.na.x,(float)seg.na.y,(float)seg.nb.x,(float)seg.nb.y,paint);
+            canvas.drawLine((float)seg.na.x+w/2,(float)seg.na.y+h/2,(float)seg.nb.x+w/2,(float)seg.nb.y+h/2,paint);
         }
     }
 
