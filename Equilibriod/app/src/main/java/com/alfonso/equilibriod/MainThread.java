@@ -50,7 +50,8 @@ public class MainThread extends Thread {
 
 
                     //actualiza el estado
-                    this.gamePanel.hm.calPos(h);
+                    //this.gamePanel.hm.calPos(h);
+                    gamePanel.tm.calPos(h);
 
                     //pinta el estado a pantalla
                     this.gamePanel.onDraw(canvas);

@@ -139,7 +139,7 @@ public class HModel {
 
         saux.snom = sv[0];
         saux.longitud0 = Double.parseDouble(sv[3]);
-        saux.k = Double.parseDouble(sv[3]) * Math.PI;
+        saux.k = Double.parseDouble(sv[4]) ;
 
         return saux;
     }
@@ -156,11 +156,14 @@ public class HModel {
 
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
+        paint.setTextSize(20);
+
+        canvas.drawText("dim w:"+w+" h:"+h,w/2,100+h/2,paint);
 
         for(Object oseg: mSeg.values()){
             Segmento seg=(Segmento) oseg;
 
-            canvas.drawLine((float)seg.na.x+w/2,(float)seg.na.y+h/2,(float)seg.nb.x+w/2,(float)seg.nb.y+h/2,paint);
+            canvas.drawLine((float)seg.na.x+w/2,-(float)seg.na.y+h/2,(float)seg.nb.x+w/2,-(float)seg.nb.y+h/2,paint);
         }
     }
 

@@ -24,4 +24,20 @@ public class NodoD {
 
     //angulo de referencia para resortes en articulaciones
     public double angulo0;
+
+
+    public NodoD(){
+        x=0;
+        y=0;
+
+        vx=0;
+        vy=0;
+
+        ax=0;
+        ay=0;
+
+        angulo0=Math.PI;
+
+        k=0;
+    }
 }

@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.alfonso.equilibriod.modelo.HModelD;
+import com.alfonso.equilibriod.toymodel.TModelD;
 
 /**
  * Created by alfonso on 15/06/15.
@@ -21,6 +22,8 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
 
     public HModelD hm;
+
+    public TModelD tm;
 
     /**
      *
@@ -34,7 +37,8 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
         setFocusable(true);
 
-        hm = new HModelD(context);
+        //hm = new HModelD(context);
+        tm = new TModelD(context);
     }
 
     /**
@@ -107,6 +111,7 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
     @Override
     protected  void onDraw(Canvas canvas){
         canvas.drawColor(Color.WHITE);
-        hm.draw(canvas);
+        //hm.draw(canvas);
+        tm.draw(canvas);
     }
 }
