@@ -127,19 +127,28 @@ public class TModelD {
 
         if(na.y<=-height/2 || nb.y<=-height/2){
             g.ay=9.81;
-            na.x = 100;
-            na.y = 100;
-            nb.x = 150;
-            nb.y = 400;
+            na.x = 0;
+            na.y = 0;
+            nb.x = 50;
+            nb.y = 300;
+
+
+            na.vy=0;
+
+            nb.vy=0;
 
         }
 
         if(na.y>=height/2 || nb.y>=height/2){
             g.ay=-9.81;
-            na.x = 100;
-            na.y = 100;
-            nb.x = 150;
-            nb.y = 400;
+            na.x = 50;
+            na.y = 300;
+            nb.x = 0;
+            nb.y = 00;
+
+            na.vy=0;
+
+            nb.vy=0;
         }
     }
 
