@@ -37,7 +37,7 @@ public class MainThread extends Thread {
     public void run(){
         Canvas canvas;
         long tickCount =0L;
-        double h=0.001;
+        double h=0.01;
 
         Log.d(TAG, "Empezando el loop del juego");
 

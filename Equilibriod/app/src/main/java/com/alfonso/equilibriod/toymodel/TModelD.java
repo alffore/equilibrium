@@ -25,9 +25,15 @@ public class TModelD {
 
     double t;
 
+    int width;
+    int height;
+
 
     public TModelD(Context context) {
         this.context = context;
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        width = metrics.widthPixels;
+        height = metrics.heightPixels;
         creaNS();
     }
 
@@ -36,12 +42,14 @@ public class TModelD {
         na = new NodoD();
         na.x = 100;
         na.y = 100;
+        na.vx=10;
         na.m = 100;
 
 
         nb = new NodoD();
         nb.x = 150;
         nb.y = 400;
+        nb.vx=-100;
         nb.m = 120;
 
         s = new Segmento(na, nb);
@@ -68,6 +76,7 @@ public class TModelD {
         nb.y += h * nb.vy;
 
         s.actualiza();
+        this.enCaja();
     }
 
 
@@ -107,19 +116,47 @@ public class TModelD {
 
     }
 
+    private void enCaja(){
+        if(na.x>=width/2 || na.x<=-width/2){
+            na.vx=-na.vx;
+        }
+
+        if(nb.x>=width/2 || nb.x<=-width/2){
+            nb.vx=-nb.vx;
+        }
+
+        if(na.y<=-height/2 || nb.y<=-height/2){
+            g.ay=9.81;
+            na.x = 100;
+            na.y = 100;
+            nb.x = 150;
+            nb.y = 400;
+
+        }
+
+        if(na.y>=height/2 || nb.y>=height/2){
+            g.ay=-9.81;
+            na.x = 100;
+            na.y = 100;
+            nb.x = 150;
+            nb.y = 400;
+        }
+    }
+
     public void draw(Canvas canvas) {
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        int w = metrics.widthPixels;
-        int h = metrics.heightPixels;
+
 
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
 
 
-        canvas.drawLine((float) na.x + w / 2, (float) na.y + h / 2, (float) nb.x + w / 2, (float) nb.y + h / 2, paint);
+        canvas.drawLine((float) na.x + width / 2, (float) na.y + height / 2, (float) nb.x + width / 2, (float) nb.y + height / 2, paint);
 
         paint.setColor(Color.RED);
+        canvas.drawCircle((float) na.x + width / 2, (float) na.y + height / 2, 50, paint);
+        //canvas.drawLine((float) na.x+w/2, (float) na.y+h/2, (float) (na.x+w/2+na.ax), (float) (na.y+h/2+na.ay), paint);
 
-        canvas.drawLine((float) na.x+w/2, (float) na.y+h/2, (float) (na.x+w/2+na.ax), (float) (na.y+h/2+na.ay), paint);
+        paint.setColor(Color.BLUE);
+        canvas.drawCircle((float) nb.x + width / 2,(float) nb.y + height / 2,25,paint);
     }
 }
