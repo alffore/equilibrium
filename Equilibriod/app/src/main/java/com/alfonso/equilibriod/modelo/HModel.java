@@ -31,6 +31,9 @@ public class HModel {
 
     Resources res;
 
+    int width;
+    int height;
+
 
     /**
      * @param context
@@ -38,6 +41,10 @@ public class HModel {
     public HModel(Context context) {
 
         this.context = context;
+
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        width = metrics.widthPixels;
+        height = metrics.heightPixels;
 
         mSeg = new HashMap();
         mNod = new HashMap();
@@ -58,6 +65,7 @@ public class HModel {
 
 
         try {
+
             InputStream is = res.openRawResource(R.raw.config_nodo);
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader buffreader = new BufferedReader(isr);
@@ -75,6 +83,7 @@ public class HModel {
 
             isr.close();
             is.close();
+
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -150,20 +159,18 @@ public class HModel {
      */
     public void draw(Canvas canvas){
 
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        int w = metrics.widthPixels;
-        int h = metrics.heightPixels;
+
 
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
-        paint.setTextSize(20);
 
-        canvas.drawText("dim w:"+w+" h:"+h,w/2,100+h/2,paint);
+
+
 
         for(Object oseg: mSeg.values()){
             Segmento seg=(Segmento) oseg;
 
-            canvas.drawLine((float)seg.na.x+w/2,-(float)seg.na.y+h/2,(float)seg.nb.x+w/2,-(float)seg.nb.y+h/2,paint);
+            canvas.drawLine((float)seg.na.x+width/2,-(float)seg.na.y+height/2,(float)seg.nb.x+width/2,-(float)seg.nb.y+height/2,paint);
         }
     }
 

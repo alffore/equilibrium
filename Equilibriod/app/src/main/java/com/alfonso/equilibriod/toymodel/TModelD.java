@@ -42,14 +42,14 @@ public class TModelD {
         na = new NodoD();
         na.x = 100;
         na.y = 100;
-        na.vx=10;
+        na.vx = 10;
         na.m = 100;
 
 
         nb = new NodoD();
         nb.x = 150;
         nb.y = 400;
-        nb.vx=-100;
+        nb.vx = -100;
         nb.m = 120;
 
         s = new Segmento(na, nb);
@@ -116,39 +116,39 @@ public class TModelD {
 
     }
 
-    private void enCaja(){
-        if(na.x>=width/2 || na.x<=-width/2){
-            na.vx=-na.vx;
+    private void enCaja() {
+        if (na.x >= width / 2 || na.x <= -width / 2) {
+            na.vx = -na.vx;
         }
 
-        if(nb.x>=width/2 || nb.x<=-width/2){
-            nb.vx=-nb.vx;
+        if (nb.x >= width / 2 || nb.x <= -width / 2) {
+            nb.vx = -nb.vx;
         }
 
-        if(na.y<=-height/2 || nb.y<=-height/2){
-            g.ay=9.81;
+        if (na.y <= -height / 2 || nb.y <= -height / 2) {
+            g.ay = 9.81;
             na.x = 0;
             na.y = 0;
             nb.x = 50;
             nb.y = 300;
 
 
-            na.vy=0;
+            na.vy = 0;
 
-            nb.vy=0;
+            nb.vy = 0;
 
         }
 
-        if(na.y>=height/2 || nb.y>=height/2){
-            g.ay=-9.81;
+        if (na.y >= height / 2 || nb.y >= height / 2) {
+            g.ay = -9.81;
             na.x = 50;
             na.y = 300;
             nb.x = 0;
             nb.y = 00;
 
-            na.vy=0;
+            na.vy = 0;
 
-            nb.vy=0;
+            nb.vy = 0;
         }
     }
 
@@ -166,6 +166,7 @@ public class TModelD {
         //canvas.drawLine((float) na.x+w/2, (float) na.y+h/2, (float) (na.x+w/2+na.ax), (float) (na.y+h/2+na.ay), paint);
 
         paint.setColor(Color.BLUE);
-        canvas.drawCircle((float) nb.x + width / 2,(float) nb.y + height / 2,25,paint);
+        canvas.drawCircle((float) nb.x + width / 2, (float) nb.y + height / 2, 25, paint);
+
     }
 }

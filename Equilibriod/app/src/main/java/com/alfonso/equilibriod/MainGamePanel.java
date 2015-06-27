@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -24,6 +25,9 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
     public HModelD hm;
 
     public TModelD tm;
+
+    private String avgFps;
+
 
     /**
      *
@@ -110,8 +114,23 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
      */
     @Override
     protected  void onDraw(Canvas canvas){
-        canvas.drawColor(Color.WHITE);
-        //hm.draw(canvas);
-        tm.draw(canvas);
+        if(canvas!=null) {
+            canvas.drawColor(Color.WHITE);
+            //hm.draw(canvas);
+            tm.draw(canvas);
+            displayFps(canvas, avgFps);
+        }
+    }
+
+    public void setAvgFps(String avgFps){
+        this.avgFps=avgFps;
+    }
+
+    private void displayFps(Canvas canvas, String fps){
+        if(canvas != null && fps!=null){
+            Paint paint = new Paint();
+            paint.setColor(Color.DKGRAY);
+            canvas.drawText(fps,this.getWidth()-50,20,paint);
+        }
     }
 }
