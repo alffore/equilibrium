@@ -28,7 +28,6 @@ public class HModelD extends HModel {
         g.y = -9.81;
 
 
-
         xuni = new NodoD();
         xuni.x = 1;
         xuni.y = 0;
@@ -37,7 +36,7 @@ public class HModelD extends HModel {
         yuni.x = 0;
         yuni.y = 1;
 
-        kvel = 0.01;
+        kvel = 8;
 
     }
 
@@ -195,13 +194,13 @@ public class HModelD extends HModel {
         n2.ax += -factor * s23.n.x;
         n2.ay += -factor * s23.n.y;
 
-        /*gamma = Math.acos(prod(s12.n, xuni) / s12.obtenLongitud());
-        NodoD rot_s12 = this.rotS(s12, -Math.PI / 2);
+        gamma = Math.acos(prod(s12.n, xuni) / s12.obtenLongitud());
+        NodoD rot_s12 = this.rotS(s12, +Math.PI / 2);
         factor = n1.k * (gamma - n1.angulo0) / (n2.m * s12.obtenLongitud());
-        n2.ax += factor * rot_s12.x;
-        n2.ay += factor * rot_s12.y;
+        n2.ax += -factor * rot_s12.x;
+        n2.ay += -factor * rot_s12.y;
 
-        gamma = Math.acos(prod(invS(s23), s36.n) / (s23.obtenLongitud() * s36.obtenLongitud()));
+        /*gamma = Math.acos(prod(invS(s23), s36.n) / (s23.obtenLongitud() * s36.obtenLongitud()));
         NodoD rot_s23 = rotS(s23, Math.PI / 2);
         factor = n3.k * (gamma - n3.angulo0) / (n2.m * s23.obtenLongitud());
         n2.ax += factor * rot_s23.x;
@@ -268,20 +267,20 @@ public class HModelD extends HModel {
 
 
         factor = s34.k * (s34.longitud0 - s34.obtenLongitud()) / (n4.m * s34.obtenLongitud());
-        n4.ax += factor * s34.n.x;
-        n4.ay += factor * s34.n.y;
+        n4.ax = factor * s34.n.x;
+        n4.ay = factor * s34.n.y;
 
         factor = s45.k * (s45.longitud0 - s45.obtenLongitud()) / (n4.m * s45.obtenLongitud());
         n4.ax += -factor * s45.n.x;
         n4.ay += -factor * s45.n.y;
 
-        /*gamma = Math.acos(prod(invS(s45), xuni) / s45.obtenLongitud());
-        NodoD rot_s45 = this.rotS(s45, Math.PI / 2);
+        gamma = Math.acos(prod(invS(s45), xuni) / s45.obtenLongitud());
+        NodoD rot_s45 = this.rotS(s45, -Math.PI / 2);
         factor = n5.k * (gamma - n5.angulo0) / (n4.m * s45.obtenLongitud());
-        n4.ax += factor * rot_s45.x;
-        n4.ay += factor * rot_s45.y;
+        n4.ax += -factor * rot_s45.x;
+        n4.ay += -factor * rot_s45.y;
 
-        gamma = Math.acos(prod(s34.n, s36.n) / (s34.obtenLongitud() * s36.obtenLongitud()));
+        /*gamma = Math.acos(prod(s34.n, s36.n) / (s34.obtenLongitud() * s36.obtenLongitud()));
         NodoD rot_s34 = rotS(s34, Math.PI / 2);
         factor = n3.k * (gamma - n3.angulo0) / (n4.m * s34.obtenLongitud());
         n4.ax += factor * rot_s34.x;
@@ -399,7 +398,7 @@ public class HModelD extends HModel {
         n9.ax += factor * s69.n.x;
         n9.ay += factor * s69.n.y;
 
-        /*gamma = Math.acos((prodS(s36, s69) / (s36.obtenLongitud() * s69.obtenLongitud())));
+       /* gamma = Math.acos((prodS(s36, s69) / (s36.obtenLongitud() * s69.obtenLongitud())));
         NodoD rot_69 = rotS(s69, Math.PI / 2);
         factor = n6.k * (gamma - n6.angulo0) / (n9.m * s69.obtenLongitud());
         n9.ax += -factor * rot_69.x;
@@ -441,7 +440,7 @@ public class HModelD extends HModel {
         n10.ax = factor * s910.n.x;
         n10.ay = factor * s910.n.y;
 
-       /* gamma = Math.acos(prod(invS(s69), s910.n) / (s69.obtenLongitud() * s910.obtenLongitud()));
+        /*gamma = Math.acos(prod(invS(s69), s910.n) / (s69.obtenLongitud() * s910.obtenLongitud()));
         factor = n9.k * (gamma - n9.angulo0) / (n10.m * s69.obtenLongitud());
         NodoD rot_910 = this.rotS(s910, -Math.PI / 2);
         n10.ax += factor * rot_910.x;

@@ -74,7 +74,7 @@ public class MainThread extends Thread {
     public void run() {
         Canvas canvas;
 
-        double h = 0.05;
+        double h = 0.01;
 
         Log.d(TAG, "Empezando el loop del juego");
         initTimingElements();
@@ -95,11 +95,11 @@ public class MainThread extends Thread {
                     framesSkipped = 0;
 
                     //actualiza el estado
-                    //this.gamePanel.hm.calPos(h);
-                    gamePanel.tm.calPos(h);
+                    gamePanel.hm.calPos(h);
+                    //gamePanel.tm.calPos(h);
 
                     //pinta el estado a pantalla
-                    this.gamePanel.onDraw(canvas);
+                    this.gamePanel.render(canvas);
 
                     //calcula la diferencia de tiempo que tomo el calculo y pintado
                     timeDiff = System.currentTimeMillis() - beginTime;

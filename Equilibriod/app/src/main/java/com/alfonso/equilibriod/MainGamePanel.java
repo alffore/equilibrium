@@ -41,8 +41,8 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
         setFocusable(true);
 
-        //hm = new HModelD(context);
-        tm = new TModelD(context);
+        hm = new HModelD(context);
+        //tm = new TModelD(context);
     }
 
     /**
@@ -114,10 +114,14 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
      */
     @Override
     protected  void onDraw(Canvas canvas){
+
+    }
+
+    public void render(Canvas canvas){
         if(canvas!=null) {
             canvas.drawColor(Color.WHITE);
-            //hm.draw(canvas);
-            tm.draw(canvas);
+            hm.draw(canvas);
+            //tm.draw(canvas);
             displayFps(canvas, avgFps);
         }
     }
