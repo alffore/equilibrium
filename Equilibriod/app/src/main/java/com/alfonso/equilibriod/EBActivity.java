@@ -8,7 +8,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 
-import com.alfonso.equilibriod.modelo.HModelD;
 
 
 public class EBActivity extends Activity {

@@ -78,7 +78,7 @@ public class HModel {
 
                 mNod.put(naux.snom, naux);
 
-                //Log.d(TAG,readString);
+                Log.d(TAG,readString);
 
                 readString = buffreader.readLine();
             }

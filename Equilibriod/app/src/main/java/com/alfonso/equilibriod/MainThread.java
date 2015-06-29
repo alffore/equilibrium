@@ -116,7 +116,7 @@ public class MainThread extends Thread {
 
                     //en caso de problemas actualizamos sin pintar
                     while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
-                        gamePanel.tm.calPos(h);
+                        gamePanel.hm.calPos(h);
                         sleepTime += FRAME_PERIOD;
                         framesSkipped++;
                     }
