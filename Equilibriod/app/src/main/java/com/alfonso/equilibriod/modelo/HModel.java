@@ -164,7 +164,7 @@ public class HModel {
         Segmento s67 = (Segmento) mSeg.get("67");
 
         double longitud0_total=2*(s67.longitud0+s78.longitud0);
-        double factorE=width/(2*longitud0_total);
+        double factorE=width/(2.5*longitud0_total);
 
         for(Object oseg: mSeg.values()){
             Segmento s=(Segmento)oseg;
@@ -193,11 +193,11 @@ public class HModel {
         //pinta manos
         paint.setColor(Color.BLUE);
         NodoD nmano=(NodoD)mNod.get("8");
-        canvas.drawCircle((float) nmano.x + width / 2, (float) (-1*nmano.y + height / 2), 15, paint);
+        canvas.drawCircle((float) nmano.x + width / 2, (float) (-1*nmano.y + height / 2), 10, paint);
 
         paint.setColor(Color.GREEN);
         nmano=(NodoD)mNod.get("10");
-        canvas.drawCircle((float) nmano.x + width / 2, (float) (-1*nmano.y + height / 2), 15, paint);
+        canvas.drawCircle((float) nmano.x + width / 2, (float) (-1*nmano.y + height / 2), 10, paint);
 
         //pinta Cabeza
         Segmento s36 =(Segmento)mSeg.get("36");
@@ -206,15 +206,15 @@ public class HModel {
         double y=n3.y+s36.n.y*1.2;
 
         paint.setColor(Color.RED);
-        canvas.drawCircle((float) (x + width / 2), (float) (-y + height / 2), 40, paint);
+        canvas.drawCircle((float) (x + width / 2), (float) (-y + height / 2), 25, paint);
 
         //pinta pies
         paint.setColor(Color.BLACK);
         NodoD npie=(NodoD)mNod.get("1");
-        canvas.drawCircle((float) npie.x + width / 2, (float) (-npie.y + height / 2), 10, paint);
+        canvas.drawCircle((float) npie.x + width / 2, (float) (-npie.y + height / 2), 5, paint);
 
         npie=(NodoD)mNod.get("5");
-        canvas.drawCircle((float) npie.x + width / 2, (float) (-npie.y + height / 2), 10, paint);
+        canvas.drawCircle((float) npie.x + width / 2, (float) (-npie.y + height / 2), 5, paint);
     }
 
 }

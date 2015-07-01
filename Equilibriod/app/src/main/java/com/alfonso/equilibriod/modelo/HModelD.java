@@ -25,7 +25,7 @@ public class HModelD extends HModel {
 
         g = new NodoD();
         g.x = 0;
-        g.y = 0*-9.81;
+        g.y =  -9.81*1000;
 
 
         xuni = new NodoD();
@@ -36,7 +36,7 @@ public class HModelD extends HModel {
         yuni.x = 0;
         yuni.y = 1;
 
-        kvel = 2;
+        kvel = 1.0;
 
     }
 
@@ -63,6 +63,27 @@ public class HModelD extends HModel {
         return n1.x * n2.x + n1.y * n2.y;
     }
 
+
+    private double obtenAngulo(Segmento s1, Segmento s2) {
+        return this.obtenAngulo(s1.n, s2.n);
+    }
+
+    /**
+     * Calcula un angulo con una orientacion especifica e informa correctamente el valor via un producto cruz
+     *
+     * @param n1
+     * @param n2
+     * @return
+     */
+    private double obtenAngulo(NodoD n1, NodoD n2) {
+
+        double aux = n1.x * n2.y - n2.x * n1.y;
+
+        double mag1 = Math.sqrt(n1.x * n1.x + n1.y * n1.y);
+        double mag2 = Math.sqrt(n2.x * n2.x + n2.y * n2.y);
+
+        return Math.asin(aux / (mag1 * mag2));
+    }
 
     /**
      * Método que invierte segmentos, rota 180 grados
@@ -169,6 +190,13 @@ public class HModelD extends HModel {
         n1.ay = 0;
     }
 
+    private void calcula_an5() {
+        NodoD n5 = (NodoD) mNod.get("5");
+
+        n5.ax = 0;
+        n5.ay = 0;
+    }
+
     private void calcula_an2() {
 
         double factor;
@@ -194,11 +222,11 @@ public class HModelD extends HModel {
         n2.ax += -factor * s23.n.x;
         n2.ay += -factor * s23.n.y;
 
-        /*gamma = Math.acos(prod(s12.n, xuni) / s12.obtenLongitud());
-        NodoD rot_s12 = this.rotS(s12, +Math.PI / 2);
+        /*gamma =this.obtenAngulo(s12.n,xuni);
+        NodoD rot_s12 = this.rotS(s12, -Math.PI / 2);
         factor = n1.k * (gamma - n1.angulo0) / (n2.m * s12.obtenLongitud());
-        n2.ax += -factor * rot_s12.x;
-        n2.ay += -factor * rot_s12.y;*/
+        n2.ax += factor * rot_s12.x;
+        n2.ay += factor * rot_s12.y;*/
 
       /* gamma = Math.acos(prod(invS(s23), s36.n) / (s23.obtenLongitud() * s36.obtenLongitud()));
         NodoD rot_s23 = rotS(s23, Math.PI / 2);
@@ -211,6 +239,48 @@ public class HModelD extends HModel {
         n2.ax += -factor * rot_s23.x;
         n2.ay += -factor * rot_s23.y;*/
     }
+
+    private void calcula_an4() {
+
+        double factor;
+        double gamma;
+
+        NodoD n4 = (NodoD) mNod.get("4");
+        NodoD n5 = (NodoD) mNod.get("5");
+        NodoD n3 = (NodoD) mNod.get("3");
+
+        Segmento s34 = (Segmento) mSeg.get("34");
+        Segmento s45 = (Segmento) mSeg.get("45");
+        Segmento s36 = (Segmento) mSeg.get("36");
+        Segmento s23 = (Segmento) mSeg.get("23");
+
+
+        factor = s34.k * (s34.longitud0 - s34.obtenLongitud()) / (n4.m * s34.obtenLongitud());
+        n4.ax = factor * s34.n.x;
+        n4.ay = factor * s34.n.y;
+
+        factor = s45.k * (s45.longitud0 - s45.obtenLongitud()) / (n4.m * s45.obtenLongitud());
+        n4.ax += -factor * s45.n.x;
+        n4.ay += -factor * s45.n.y;
+
+        /*gamma = obtenAngulo(invS(s45),xuni);
+        NodoD rot_s45 = this.rotS(s45, -Math.PI / 2);
+        factor = n5.k * (gamma - n5.angulo0) / (n4.m * s45.obtenLongitud());
+        n4.ax += -factor * rot_s45.x;
+        n4.ay += -factor * rot_s45.y;*/
+
+       /* gamma = Math.acos(prod(s34.n, s36.n) / (s34.obtenLongitud() * s36.obtenLongitud()));
+        NodoD rot_s34 = rotS(s34, Math.PI / 2);
+        factor = n3.k * (gamma - n3.angulo0) / (n4.m * s34.obtenLongitud());
+        n4.ax += factor * rot_s34.x;
+        n4.ay += factor * rot_s34.y;
+
+        gamma = Math.acos(prod(invS(s23), s34.n) / (s23.obtenLongitud() * s34.obtenLongitud()));
+        factor = n3.k * (gamma - n3.angulo0) / (n4.m * s23.obtenLongitud());
+        n4.ax += -factor * rot_s34.x;
+        n4.ay += -factor * rot_s34.y;*/
+    }
+
 
     private void calcula_an3() {
 
@@ -251,53 +321,6 @@ public class HModelD extends HModel {
 
     }
 
-    private void calcula_an4() {
-
-        double factor;
-        double gamma;
-
-        NodoD n4 = (NodoD) mNod.get("4");
-        NodoD n5 = (NodoD) mNod.get("5");
-        NodoD n3 = (NodoD) mNod.get("3");
-
-        Segmento s34 = (Segmento) mSeg.get("34");
-        Segmento s45 = (Segmento) mSeg.get("45");
-        Segmento s36 = (Segmento) mSeg.get("36");
-        Segmento s23 = (Segmento) mSeg.get("23");
-
-
-        factor = s34.k * (s34.longitud0 - s34.obtenLongitud()) / (n4.m * s34.obtenLongitud());
-        n4.ax = factor * s34.n.x;
-        n4.ay = factor * s34.n.y;
-
-        factor = s45.k * (s45.longitud0 - s45.obtenLongitud()) / (n4.m * s45.obtenLongitud());
-        n4.ax += -factor * s45.n.x;
-        n4.ay += -factor * s45.n.y;
-
-        /*gamma = Math.acos(prod(invS(s45), xuni) / s45.obtenLongitud());
-        NodoD rot_s45 = this.rotS(s45, -Math.PI / 2);
-        factor = n5.k * (gamma - n5.angulo0) / (n4.m * s45.obtenLongitud());
-        n4.ax += -factor * rot_s45.x;
-        n4.ay += -factor * rot_s45.y;*/
-
-       /* gamma = Math.acos(prod(s34.n, s36.n) / (s34.obtenLongitud() * s36.obtenLongitud()));
-        NodoD rot_s34 = rotS(s34, Math.PI / 2);
-        factor = n3.k * (gamma - n3.angulo0) / (n4.m * s34.obtenLongitud());
-        n4.ax += factor * rot_s34.x;
-        n4.ay += factor * rot_s34.y;
-
-        gamma = Math.acos(prod(invS(s23), s34.n) / (s23.obtenLongitud() * s34.obtenLongitud()));
-        factor = n3.k * (gamma - n3.angulo0) / (n4.m * s23.obtenLongitud());
-        n4.ax += -factor * rot_s34.x;
-        n4.ay += -factor * rot_s34.y;*/
-    }
-
-    private void calcula_an5() {
-        NodoD n5 = (NodoD) mNod.get("5");
-
-        n5.ax = 0;
-        n5.ay = 0;
-    }
 
     private void calcula_an6() {
         double factor;
@@ -328,13 +351,15 @@ public class HModelD extends HModel {
         n6.ax += -factor * s69.n.x;
         n6.ay += -factor * s69.n.y;
 
-        /*gamma = Math.acos(prod(invS(s67), s78.n) / (s67.obtenLongitud() * s78.obtenLongitud()));
+
+        /*gamma = obtenAngulo(s78.n, invS(s67));
         factor = n7.k * (gamma - n7.angulo0) / (n6.m * s67.obtenLongitud());
         NodoD rot_67 = this.rotS(s67, Math.PI / 2);
         n6.ax += factor * rot_67.x;
-        n6.ay += factor * rot_67.y;
+        n6.ay += factor * rot_67.y;*/
 
-        gamma = Math.acos(prod(invS(s69), s910.n) / (s69.obtenLongitud() * s910.obtenLongitud()));
+
+        /*gamma = obtenAngulo(invS(s69), s910.n);
         factor = n9.k * (gamma - n9.angulo0) / (n6.m * s69.obtenLongitud());
         NodoD rot_69 = this.rotS(s69, -Math.PI / 2);
         n6.ax += factor * rot_69.x;
@@ -419,7 +444,8 @@ public class HModelD extends HModel {
         n8.ax = factor * s78.n.x;
         n8.ay = factor * s78.n.y;
 
-        /*gamma = Math.acos(prod(invS(s67), s78.n) / (s67.obtenLongitud() * s78.obtenLongitud()));
+
+        /*gamma = obtenAngulo(s78.n, invS(s67));
         factor = n7.k * (gamma - n7.angulo0) / (n8.m * s78.obtenLongitud());
         NodoD rot_78 = this.rotS(s78, Math.PI / 2);
         n8.ax += factor * rot_78.x;
@@ -440,10 +466,40 @@ public class HModelD extends HModel {
         n10.ax = factor * s910.n.x;
         n10.ay = factor * s910.n.y;
 
-        /*gamma = Math.acos(prod(invS(s69), s910.n) / (s69.obtenLongitud() * s910.obtenLongitud()));
+        /*gamma = obtenAngulo(s910.n, invS(s69));
         factor = n9.k * (gamma - n9.angulo0) / (n10.m * s69.obtenLongitud());
         NodoD rot_910 = this.rotS(s910, -Math.PI / 2);
         n10.ax += factor * rot_910.x;
         n10.ay += factor * rot_910.y;*/
+    }
+
+    /**
+     * Método para agregar peso a un NodoD
+     * @param peso
+     * @param n
+     */
+    public void agregaPesoNodo(double peso, NodoD n){
+
+        n.m+=peso;
+
+    }
+
+    public void agregaPesoManoC(float x, float y, double peso){
+
+        double xd=x-width/2;
+        double yd=y-height/2;
+
+        NodoD n8=(NodoD)mNod.get("8");
+        NodoD n10=(NodoD)mNod.get("10");
+
+        double dist8=Math.pow(n8.x-xd,2)+Math.pow(n8.y-yd,2);
+        double dist10=Math.pow(n10.x-xd,2)+Math.pow(n10.y-yd,2);
+
+        if(dist8<dist10){
+            this.agregaPesoNodo(peso,n8);
+        }else{
+            this.agregaPesoNodo(peso,n10);
+        }
+
     }
 }

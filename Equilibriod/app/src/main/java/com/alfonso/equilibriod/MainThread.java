@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.text.DecimalFormat;
-import java.util.concurrent.CancellationException;
+
 
 /**
  * Created by alfonso on 15/06/15.

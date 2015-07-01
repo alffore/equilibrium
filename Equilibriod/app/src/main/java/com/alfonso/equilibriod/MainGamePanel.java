@@ -11,7 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.alfonso.equilibriod.modelo.HModelD;
-import com.alfonso.equilibriod.toymodel.TModelD;
+
 
 /**
  * Created by alfonso on 15/06/15.
@@ -24,7 +24,7 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
     public HModelD hm;
 
-    public TModelD tm;
+    //public TModelD tm;
 
     private String avgFps;
 
@@ -100,6 +100,9 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
                 thread.setRunning(false);
                 ((Activity)getContext()).finish();
             }else{
+
+                hm.agregaPesoManoC(event.getX(),event.getY(),20.00);
+
                 Log.d(TAG,"Coords x="+event.getX()+ " y="+event.getY());
             }
         }
