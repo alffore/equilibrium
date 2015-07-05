@@ -95,8 +95,9 @@ public class MainThread extends Thread {
                     framesSkipped = 0;
 
                     //actualiza el estado
-                    gamePanel.hm.calPos(h);
+                    //gamePanel.hm.calPos(h);
                     //gamePanel.tm.calPos(h);
+                    gamePanel.playG.simulaA(h);
 
                     //pinta el estado a pantalla
                     this.gamePanel.render(canvas);
@@ -116,7 +117,8 @@ public class MainThread extends Thread {
 
                     //en caso de problemas actualizamos sin pintar
                     while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
-                        gamePanel.hm.calPos(h);
+                        //gamePanel.hm.calPos(h);
+                        gamePanel.playG.simulaA(h);
                         sleepTime += FRAME_PERIOD;
                         framesSkipped++;
                     }

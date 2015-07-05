@@ -24,8 +24,8 @@ public class HModelD extends HModel {
         super(context);
 
         g = new NodoD();
-        g.x = 0;
-        g.y =  -9.81*1000;
+        g.ax = 0;
+        g.ay =  -9.81*1000;
 
 
         xuni = new NodoD();
@@ -136,7 +136,10 @@ public class HModelD extends HModel {
         }
     }
 
-
+    /**
+     *
+     * @param h
+     */
     private void calVel(double h) {
         calAcel();
         for (Object onodo : mNod.values()) {
@@ -150,8 +153,11 @@ public class HModelD extends HModel {
     }
 
 
-    // cálculo de las aceleraciones instantaneas por nodo
+    //
 
+    /**
+     * Metodo para calcular las aceleraciones instantaneas por nodo
+     */
     private void calAcel() {
 
         calcula_an8();
@@ -222,11 +228,11 @@ public class HModelD extends HModel {
         n2.ax += -factor * s23.n.x;
         n2.ay += -factor * s23.n.y;
 
-        /*gamma =this.obtenAngulo(s12.n,xuni);
+        gamma =this.obtenAngulo(s12.n,xuni);
         NodoD rot_s12 = this.rotS(s12, -Math.PI / 2);
         factor = n1.k * (gamma - n1.angulo0) / (n2.m * s12.obtenLongitud());
         n2.ax += factor * rot_s12.x;
-        n2.ay += factor * rot_s12.y;*/
+        n2.ay += factor * rot_s12.y;
 
       /* gamma = Math.acos(prod(invS(s23), s36.n) / (s23.obtenLongitud() * s36.obtenLongitud()));
         NodoD rot_s23 = rotS(s23, Math.PI / 2);
@@ -263,11 +269,11 @@ public class HModelD extends HModel {
         n4.ax += -factor * s45.n.x;
         n4.ay += -factor * s45.n.y;
 
-        /*gamma = obtenAngulo(invS(s45),xuni);
+        gamma = obtenAngulo(invS(s45),xuni);
         NodoD rot_s45 = this.rotS(s45, -Math.PI / 2);
         factor = n5.k * (gamma - n5.angulo0) / (n4.m * s45.obtenLongitud());
         n4.ax += -factor * rot_s45.x;
-        n4.ay += -factor * rot_s45.y;*/
+        n4.ay += -factor * rot_s45.y;
 
        /* gamma = Math.acos(prod(s34.n, s36.n) / (s34.obtenLongitud() * s36.obtenLongitud()));
         NodoD rot_s34 = rotS(s34, Math.PI / 2);
@@ -484,6 +490,12 @@ public class HModelD extends HModel {
 
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param peso
+     */
     public void agregaPesoManoC(float x, float y, double peso){
 
         double xd=x-width/2;

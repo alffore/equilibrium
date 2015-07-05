@@ -144,7 +144,7 @@ public class TModelD {
             na.x = 50;
             na.y = 300;
             nb.x = 0;
-            nb.y = 00;
+            nb.y = 0;
 
             na.vy = 0;
 

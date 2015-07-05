@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.alfonso.equilibriod.modelo.HModelD;
+import com.alfonso.equilibriod.playground.PlayGround;
 
 
 /**
@@ -23,6 +24,8 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
 
     public HModelD hm;
+
+    public PlayGround playG;
 
     //public TModelD tm;
 
@@ -41,8 +44,10 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
         setFocusable(true);
 
-        hm = new HModelD(context);
+        //hm = new HModelD(context);
         //tm = new TModelD(context);
+
+        playG = new PlayGround(context);
     }
 
     /**
@@ -101,7 +106,7 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
                 ((Activity)getContext()).finish();
             }else{
 
-                hm.agregaPesoManoC(event.getX(),event.getY(),20.00);
+                //hm.agregaPesoManoC(event.getX(),event.getY(),20.00);
 
                 Log.d(TAG,"Coords x="+event.getX()+ " y="+event.getY());
             }
@@ -120,11 +125,18 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
     }
 
+    /**
+     *
+     * @param canvas
+     */
     public void render(Canvas canvas){
         if(canvas!=null) {
             canvas.drawColor(Color.WHITE);
-            hm.draw(canvas);
+            //hm.draw(canvas);
             //tm.draw(canvas);
+            
+            playG.draw(canvas);
+
             displayFps(canvas, avgFps);
         }
     }
@@ -133,6 +145,12 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
         this.avgFps=avgFps;
     }
 
+
+    /**
+     *
+     * @param canvas
+     * @param fps
+     */
     private void displayFps(Canvas canvas, String fps){
         if(canvas != null && fps!=null){
             Paint paint = new Paint();
