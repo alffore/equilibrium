@@ -5,7 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import com.alfonso.equilibriod.modelo.HModelD;
-import com.alfonso.equilibriod.modelo.PCModel;
+import com.alfonso.equilibriod.modelo.PiedraModel;
 
 /**
  * Created by alfonso on 5/07/15.
@@ -16,7 +16,7 @@ public class PlayGround {
 
 
     HModelD hm;
-    PCModel pcm;
+    PiedraModel pcm;
 
     /**
      * @param context
@@ -26,7 +26,7 @@ public class PlayGround {
         this.context = context;
 
         hm = new HModelD(context);
-        pcm = new PCModel(context);
+        pcm = new PiedraModel(context);
 
         pcm.creaPesosC();
     }
@@ -39,6 +39,14 @@ public class PlayGround {
         hm.calPos(h);
         pcm.calPos(h*30);
     }
+
+
+    public void interaccion(double x, double y){
+
+        pcm.muevePC(x,y);
+    }
+
+
 
 
     /**

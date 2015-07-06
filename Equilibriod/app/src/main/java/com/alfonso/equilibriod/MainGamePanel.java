@@ -17,9 +17,9 @@ import com.alfonso.equilibriod.playground.PlayGround;
 /**
  * Created by alfonso on 15/06/15.
  */
-public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callback{
+public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
-    private  static final String TAG = MainGamePanel.class.getSimpleName();
+    private static final String TAG = MainGamePanel.class.getSimpleName();
     private MainThread thread;
 
 
@@ -33,14 +33,13 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
 
 
     /**
-     *
      * @param context
      */
     public MainGamePanel(Context context) {
         super(context);
         getHolder().addCallback(this);
 
-        thread=new MainThread(getHolder(),this);
+        thread = new MainThread(getHolder(), this);
 
         setFocusable(true);
 
@@ -51,7 +50,6 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     /**
-     *
      * @param holder
      */
     @Override
@@ -61,7 +59,6 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     /**
-     *
      * @param holder
      * @param format
      * @param width
@@ -73,89 +70,88 @@ public class MainGamePanel  extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     /**
-     *
      * @param holder
      */
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry =true;
+        boolean retry = true;
 
-        while(retry){
-            try{
+        while (retry) {
+            try {
 
                 thread.join();
-                retry=false;
+                retry = false;
 
-            }catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 //tratando de apagar la tarea
             }
         }
     }
 
     /**
-     *
      * @param event
      * @return
      */
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
 
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
-            if(event.getY() > getHeight()-50){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (event.getY() > getHeight() - 50) {
                 thread.setRunning(false);
-                ((Activity)getContext()).finish();
-            }else{
+                ((Activity) getContext()).finish();
+            } else {
 
                 //hm.agregaPesoManoC(event.getX(),event.getY(),20.00);
 
-                Log.d(TAG,"Coords x="+event.getX()+ " y="+event.getY());
+                if (event.getY() < getHeight() - 50) {
+                    playG.interaccion(event.getX(), event.getY());
+                }
+
+                Log.d(TAG, "Coords x=" + event.getX() + " y=" + event.getY());
             }
         }
 
 
-        return  super.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 
     /**
-     *
      * @param canvas
      */
     @Override
-    protected  void onDraw(Canvas canvas){
+    protected void onDraw(Canvas canvas) {
 
     }
 
     /**
-     *
      * @param canvas
      */
-    public void render(Canvas canvas){
-        if(canvas!=null) {
+    public void render(Canvas canvas) {
+        if (canvas != null) {
             canvas.drawColor(Color.WHITE);
             //hm.draw(canvas);
             //tm.draw(canvas);
-            
+
             playG.draw(canvas);
 
             displayFps(canvas, avgFps);
         }
     }
 
-    public void setAvgFps(String avgFps){
-        this.avgFps=avgFps;
+    public void setAvgFps(String avgFps) {
+        this.avgFps = avgFps;
     }
 
 
     /**
-     *
      * @param canvas
      * @param fps
      */
-    private void displayFps(Canvas canvas, String fps){
-        if(canvas != null && fps!=null){
+    private void displayFps(Canvas canvas, String fps) {
+        if (canvas != null && fps != null) {
             Paint paint = new Paint();
             paint.setColor(Color.DKGRAY);
-            canvas.drawText(fps,this.getWidth()-50,20,paint);
+            canvas.drawText(fps, this.getWidth() - 50, 20, paint);
         }
     }
 }

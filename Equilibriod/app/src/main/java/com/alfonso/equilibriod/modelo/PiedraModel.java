@@ -13,9 +13,9 @@ import java.util.Random;
 /**
  * Created by alfonso on 5/07/15.
  */
-public class PCModel {
+public class PiedraModel {
 
-    private static final String TAG = PCModel.class.getSimpleName();
+    private static final String TAG = PiedraModel.class.getSimpleName();
     private double T;
 
     public ArrayList<PiedraCaja> apc;
@@ -34,7 +34,7 @@ public class PCModel {
     /**
      * @param context
      */
-    public PCModel(Context context) {
+    public PiedraModel(Context context) {
         T = 0;
         pesoMAX = 10000;
         this.context = context;
@@ -44,7 +44,7 @@ public class PCModel {
 
         g = new NodoD();
         g.ax = 0;
-        g.ay = -9.81 ;
+        g.ay = 0*-9.81;
 
         kvel = 1.0;
 
@@ -65,7 +65,6 @@ public class PCModel {
     }
 
     /**
-     *
      * @param h
      */
     private void calculaVelocidad(double h) {
@@ -77,7 +76,6 @@ public class PCModel {
     }
 
     /**
-     *
      * @param h
      */
     public void calPos(double h) {
@@ -112,8 +110,8 @@ public class PCModel {
             pc.ax = 0;
             pc.ay = 0;
 
-            pc.x = randInt(20-width/2, width - 20);
-            pc.y = randInt(height, height*2);
+            pc.x = randInt(20 - width / 2, width - 20);
+            pc.y = randInt(height, height * 2);
 
             apc.add(pc);
 
@@ -139,6 +137,41 @@ public class PCModel {
 
         }
     }
+
+
+    public void muevePC(double x, double y) {
+
+        x-=width/2;
+        y=height/2-y;
+
+        //buscamos la partícula mas cercana
+        PiedraCaja pc = apc.get(0);
+
+        double dmin = Math.pow(pc.x - x, 2) + Math.pow(pc.y - y, 2);
+        int imin = 0;
+        int cpc = apc.size();
+        for (int i = 1; i < cpc; i++) {
+            pc = apc.get(i);
+            double daux = Math.pow(pc.x - x, 2) + Math.pow(pc.y - y, 2);
+
+            if (dmin > daux) {
+                dmin = daux;
+                imin = i;
+            }
+
+        }
+
+        pc=apc.get(imin);
+
+        if(pc.x>x){
+            pc.x-=20;
+        }else{
+            pc.x+=20;
+        }
+
+
+    }
+
 
     /**
      * Returns a pseudo-random number between min and max, inclusive.

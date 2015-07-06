@@ -166,10 +166,22 @@ public class HModel {
         double longitud0_total=2*(s67.longitud0+s78.longitud0);
         double factorE=width/(2.5*longitud0_total);
 
+
+
+        for(Object onod: mNod.values()){
+            NodoD n=(NodoD)onod;
+
+            n.x*=factorE;
+            n.y*=factorE;
+        }
+
+
         for(Object oseg: mSeg.values()){
             Segmento s=(Segmento)oseg;
             s.longitud0*=factorE;
+            s.actualiza();
         }
+
         Log.d(TAG,"Factor de Escala: "+factorE);
     }
 

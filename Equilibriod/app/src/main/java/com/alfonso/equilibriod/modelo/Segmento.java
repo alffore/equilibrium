@@ -34,6 +34,9 @@ public class Segmento {
         angulo = this.obtenAngulo();
     }
 
+    /**
+     *
+     */
     public void actualiza() {
         n.x = nb.x - na.x;
         n.y = nb.y - na.y;
