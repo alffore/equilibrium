@@ -44,7 +44,7 @@ public class PiedraModel {
 
         g = new NodoD();
         g.ax = 0;
-        g.ay = 0*-9.81;
+        g.ay = -9.81;
 
         kvel = 1.0;
 
@@ -111,7 +111,7 @@ public class PiedraModel {
             pc.ay = 0;
 
             pc.x = randInt(20 - width / 2, width - 20);
-            pc.y = randInt(height, height * 2);
+            pc.y = randInt(100, height * 2);
 
             apc.add(pc);
 

@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.alfonso.equilibriod.modelo.HModelD;
+import com.alfonso.equilibriod.modelo.HModelD2;
 import com.alfonso.equilibriod.playground.PlayGround;
 
 
@@ -23,7 +24,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
     private MainThread thread;
 
 
-    public HModelD hm;
+    public HModelD2 hm;
 
     public PlayGround playG;
 
@@ -101,7 +102,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
                 ((Activity) getContext()).finish();
             } else {
 
-                //hm.agregaPesoManoC(event.getX(),event.getY(),20.00);
+                playG.hm.agregaPesoManoC(event.getX(),event.getY(),3.00);
 
                 if (event.getY() < getHeight() - 50) {
                     playG.interaccion(event.getX(), event.getY());

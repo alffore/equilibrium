@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import com.alfonso.equilibriod.modelo.HModelD;
+import com.alfonso.equilibriod.modelo.HModelD2;
 import com.alfonso.equilibriod.modelo.PiedraModel;
 
 /**
@@ -15,7 +16,7 @@ public class PlayGround {
     Context context;
 
 
-    HModelD hm;
+    public HModelD2 hm;
     PiedraModel pcm;
 
     /**
@@ -25,7 +26,7 @@ public class PlayGround {
 
         this.context = context;
 
-        hm = new HModelD(context);
+        hm = new HModelD2(context);
         pcm = new PiedraModel(context);
 
         pcm.creaPesosC();
@@ -37,7 +38,7 @@ public class PlayGround {
      */
     public void simulaA(double h) {
         hm.calPos(h);
-        pcm.calPos(h*30);
+        pcm.calPos(h);
     }
 
 

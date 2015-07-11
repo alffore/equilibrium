@@ -16,8 +16,11 @@ public class Segmento {
     private double angulo;
 
     public String snom;
+    public int id;
 
     public double k;
+
+    public boolean ficticio;
 
     /**
      * @param na
@@ -32,6 +35,7 @@ public class Segmento {
         actualiza();
 
         angulo = this.obtenAngulo();
+        ficticio=false;
     }
 
     /**

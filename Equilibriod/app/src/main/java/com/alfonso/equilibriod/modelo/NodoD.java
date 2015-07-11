@@ -22,6 +22,8 @@ public class NodoD {
     //k del resorte en nodo
     public double k;
 
+    public int id;
+
     //angulo de referencia para resortes en articulaciones
     public double angulo0;
 

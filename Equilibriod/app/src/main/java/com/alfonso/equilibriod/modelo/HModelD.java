@@ -36,7 +36,7 @@ public class HModelD extends HModel {
         yuni.x = 0;
         yuni.y = 1;
 
-        kvel = 1.0;
+        kvel = 4.0;
 
     }
 
@@ -63,7 +63,12 @@ public class HModelD extends HModel {
         return n1.x * n2.x + n1.y * n2.y;
     }
 
-
+    /**
+     *
+     * @param s1
+     * @param s2
+     * @return
+     */
     private double obtenAngulo(Segmento s1, Segmento s2) {
         return this.obtenAngulo(s1.n, s2.n);
     }
@@ -114,7 +119,6 @@ public class HModelD extends HModel {
 
     /**
      * Método que calcula a nueva posición de los nodos con un paso de tiempo h
-     *
      * @param h
      */
     public void calPos(double h) {
@@ -137,7 +141,7 @@ public class HModelD extends HModel {
     }
 
     /**
-     *
+     * Método para calcular la velocidad
      * @param h
      */
     private void calVel(double h) {
@@ -156,9 +160,9 @@ public class HModelD extends HModel {
     //
 
     /**
-     * Metodo para calcular las aceleraciones instantaneas por nodo
+     * Método para calcular las aceleraciones instantaneas por nodo
      */
-    private void calAcel() {
+    protected void calAcel() {
 
         calcula_an8();
         calcula_an10();
@@ -188,7 +192,7 @@ public class HModelD extends HModel {
 
     }
 
-    private void calcula_an1() {
+    protected void calcula_an1() {
 
         NodoD n1 = (NodoD) mNod.get("1");
 
@@ -196,14 +200,14 @@ public class HModelD extends HModel {
         n1.ay = 0;
     }
 
-    private void calcula_an5() {
+    protected void calcula_an5() {
         NodoD n5 = (NodoD) mNod.get("5");
 
         n5.ax = 0;
         n5.ay = 0;
     }
 
-    private void calcula_an2() {
+    protected void calcula_an2() {
 
         double factor;
         double gamma;
@@ -228,13 +232,13 @@ public class HModelD extends HModel {
         n2.ax += -factor * s23.n.x;
         n2.ay += -factor * s23.n.y;
 
-        /*gamma =this.obtenAngulo(s12.n,xuni);
+       /* gamma =this.obtenAngulo(s12.n,xuni);
         NodoD rot_s12 = this.rotS(s12, -Math.PI / 2);
         factor = n1.k * (gamma - n1.angulo0) / (n2.m * s12.obtenLongitud());
         n2.ax += factor * rot_s12.x;
-        n2.ay += factor * rot_s12.y;*/
+        n2.ay += factor * rot_s12.y;
 
-      /* gamma = Math.acos(prod(invS(s23), s36.n) / (s23.obtenLongitud() * s36.obtenLongitud()));
+       gamma = Math.acos(prod(invS(s23), s36.n) / (s23.obtenLongitud() * s36.obtenLongitud()));
         NodoD rot_s23 = rotS(s23, Math.PI / 2);
         factor = n3.k * (gamma - n3.angulo0) / (n2.m * s23.obtenLongitud());
         n2.ax += factor * rot_s23.x;
@@ -244,9 +248,17 @@ public class HModelD extends HModel {
         factor = n3.k * (gamma - n3.angulo0) / (n2.m * s23.obtenLongitud());
         n2.ax += -factor * rot_s23.x;
         n2.ay += -factor * rot_s23.y;*/
+
+
+        /*gamma=this.obtenAngulo(s12.n,xuni);
+        NodoD rot_s12 = this.rotS(s12, -Math.PI / 2);
+        factor=n1.k*modeloKRes2(gamma, Math.PI / 16, Math.PI / 2, Math.PI * 15 / 16)/(n2.m * s12.obtenLongitud());
+        n2.ax += factor * rot_s12.x;
+        n2.ay += factor * rot_s12.y;*/
+
     }
 
-    private void calcula_an4() {
+    protected void calcula_an4() {
 
         double factor;
         double gamma;
@@ -269,7 +281,7 @@ public class HModelD extends HModel {
         n4.ax += -factor * s45.n.x;
         n4.ay += -factor * s45.n.y;
 
-        /*gamma = obtenAngulo(invS(s45),xuni);
+        /*gamma = obtenAngulo(invS(s45), xuni);
         NodoD rot_s45 = this.rotS(s45, -Math.PI / 2);
         factor = n5.k * (gamma - n5.angulo0) / (n4.m * s45.obtenLongitud());
         n4.ax += -factor * rot_s45.x;
@@ -285,10 +297,16 @@ public class HModelD extends HModel {
         factor = n3.k * (gamma - n3.angulo0) / (n4.m * s23.obtenLongitud());
         n4.ax += -factor * rot_s34.x;
         n4.ay += -factor * rot_s34.y;*/
+
+        /*gamma = obtenAngulo(invS(s45), xuni);
+        NodoD rot_s45 = this.rotS(s45, -Math.PI / 2);
+        factor = n5.k *modeloKRes2(gamma, Math.PI / 16, Math.PI / 2, Math.PI * 15 / 16) / (n4.m * s45.obtenLongitud());
+        n4.ax += -factor * rot_s45.x;
+        n4.ay += -factor * rot_s45.y;*/
     }
 
 
-    private void calcula_an3() {
+    protected void calcula_an3() {
 
         double factor;
         double gamma;
@@ -328,7 +346,7 @@ public class HModelD extends HModel {
     }
 
 
-    private void calcula_an6() {
+    protected void calcula_an6() {
         double factor;
         double gamma;
 
@@ -384,7 +402,7 @@ public class HModelD extends HModel {
 
     }
 
-    private void calcula_an7() {
+    protected void calcula_an7() {
         double factor;
         double gamma;
 
@@ -411,7 +429,7 @@ public class HModelD extends HModel {
 
     }
 
-    private void calcula_an9() {
+    protected void calcula_an9() {
         double factor;
         double gamma;
 
@@ -437,7 +455,7 @@ public class HModelD extends HModel {
 
     }
 
-    private void calcula_an8() {
+    protected void calcula_an8() {
         double factor;
         double gamma;
 
@@ -459,7 +477,7 @@ public class HModelD extends HModel {
 
     }
 
-    private void calcula_an10() {
+    protected void calcula_an10() {
         double factor;
         double gamma;
 
@@ -513,5 +531,44 @@ public class HModelD extends HModel {
             this.agregaPesoNodo(peso,n10);
         }
 
+    }
+
+    /**
+     * Modelo resorte tan
+     * @param angulo
+     * @return
+     */
+    private double modeloKRes(double angulo){
+
+        double a=Math.PI;
+        double b=0;
+
+        return Math.tan((Math.PI*angulo/(a-b))-Math.PI*(a+b)/(2*(b-a)));
+
+    }
+
+    /**
+     * Modelo resorte tan version 2
+     * @param angulo
+     * @param a Angulo minimo
+     * @param b Angulo estable
+     * @param c Angulo maximo
+     * @return
+     */
+    private double modeloKRes2(double angulo,double a,double b, double c){
+
+        if(angulo<=a){
+            angulo=+a/10;
+        }
+
+        if(angulo>=b){
+            angulo-=b/10;
+        }
+
+        double aux=Math.PI*Math.pow(angulo,2.0)/(2.0*(a-b)*(c-b));
+        aux+=(a+c)*Math.PI*angulo/(2.0*(a-b)*(b-c));
+        aux-=b*(a-b+c)*Math.PI/(2.0*(a-b)*(b-c));
+
+        return Math.tan(aux);
     }
 }

@@ -61,7 +61,7 @@ public class HModel {
     }
 
     /**
-     * Este método incializa la posicion de los nodos
+     * Método incializa la posicion de los nodos
      */
     private void incializaNodos() {
 
@@ -78,7 +78,7 @@ public class HModel {
 
                 mNod.put(naux.snom, naux);
 
-                Log.d(TAG,readString);
+                Log.d(TAG, readString);
 
                 readString = buffreader.readLine();
             }
@@ -101,12 +101,13 @@ public class HModel {
         NodoD naux = new NodoD();
 
         naux.snom = sv[0];
+        naux.id = Integer.parseInt(sv[0]);
         naux.x = Double.parseDouble(sv[1]);
         naux.y = Double.parseDouble(sv[2]);
         naux.m = Double.parseDouble(sv[3]);
         naux.k = Double.parseDouble(sv[4]);
-        naux.angulo0 =Double.parseDouble(sv[5])*Math.PI;
-
+        naux.angulo0 = Double.parseDouble(sv[5]) * Math.PI;
+Log.d(TAG,"nodo: "+naux.snom);
         return naux;
     }
 
@@ -138,95 +139,112 @@ public class HModel {
     }
 
     /**
-     *
      * @param scadena
      * @return
      */
     private Segmento creaSegmento(String scadena) {
 
         String[] sv = scadena.split(",");
-
+Log.d(TAG,"Nodo para S: "+sv[1]+" "+sv[2]+" size: "+sv.length);
         Segmento saux = new Segmento((NodoD) mNod.get(sv[1]), (NodoD) mNod.get(sv[2]));
 
         saux.snom = sv[0];
+        saux.id = Integer.parseInt(sv[0]);
         saux.longitud0 = Double.parseDouble(sv[3]);
-        saux.k = Double.parseDouble(sv[4]) ;
+        saux.k = Double.parseDouble(sv[4]);
+
+        if (saux.id>100) {
+            saux.ficticio = true;
+        }
 
         return saux;
     }
 
     /**
-     *
+     * Método que realiza el escalamiento a pantalla
      */
-    private void escalaModelo(){
+    protected void escalaModelo() {
 
-        Segmento s78 = (Segmento) mSeg.get("78");
-        Segmento s67 = (Segmento) mSeg.get("67");
+        Segmento s7 = (Segmento) mSeg.get("7");
+        Segmento s6 = (Segmento) mSeg.get("6");
 
-        double longitud0_total=2*(s67.longitud0+s78.longitud0);
-        double factorE=width/(2.5*longitud0_total);
+        double longitud0_total = 2 * (s6.longitud0 + s7.longitud0);
+        double factorE = width / (2.5 * longitud0_total);
 
 
+        for (Object onod : mNod.values()) {
+            NodoD n = (NodoD) onod;
 
-        for(Object onod: mNod.values()){
-            NodoD n=(NodoD)onod;
-
-            n.x*=factorE;
-            n.y*=factorE;
+            n.x *= factorE;
+            n.y *= factorE;
         }
 
 
-        for(Object oseg: mSeg.values()){
-            Segmento s=(Segmento)oseg;
-            s.longitud0*=factorE;
+        for (Object oseg : mSeg.values()) {
+            Segmento s = (Segmento) oseg;
+            if (s.longitud0 < 0) {
+                s.longitud0 = s.obtenLongitud();
+            }
+            s.longitud0 *= factorE;
             s.actualiza();
+
         }
 
-        Log.d(TAG,"Factor de Escala: "+factorE);
+        Log.d(TAG, "Factor de Escala: " + factorE);
     }
 
     /**
-     *
      * @param canvas
      */
-    public void draw(Canvas canvas){
+    public void draw(Canvas canvas) {
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.BLACK);
 
         paint.setStrokeWidth(2.0f);
         //pinta los segmentos
-        for(Object oseg: mSeg.values()){
-            Segmento seg=(Segmento) oseg;
-
-            canvas.drawLine((float)seg.na.x+width/2,(float)(-seg.na.y+height/2),(float)seg.nb.x+width/2,(float)(-seg.nb.y+height/2),paint);
+        for (Object oseg : mSeg.values()) {
+            Segmento seg = (Segmento) oseg;
+            if (!seg.ficticio) {
+                canvas.drawLine((float) seg.na.x + width / 2, (float) (-seg.na.y + height / 2), (float) seg.nb.x + width / 2, (float) (-seg.nb.y + height / 2), paint);
+            }
         }
 
         //pinta manos
         paint.setColor(Color.BLUE);
-        NodoD nmano=(NodoD)mNod.get("8");
-        canvas.drawCircle((float) nmano.x + width / 2, (float) (-1*nmano.y + height / 2), 10, paint);
+        NodoD nmano = (NodoD) mNod.get("8");
+        canvas.drawCircle((float) nmano.x + width / 2, (float) (-1 * nmano.y + height / 2), 10, paint);
 
         paint.setColor(Color.GREEN);
-        nmano=(NodoD)mNod.get("10");
-        canvas.drawCircle((float) nmano.x + width / 2, (float) (-1*nmano.y + height / 2), 10, paint);
+        nmano = (NodoD) mNod.get("10");
+        canvas.drawCircle((float) nmano.x + width / 2, (float) (-1 * nmano.y + height / 2), 10, paint);
 
         //pinta Cabeza
-        Segmento s36 =(Segmento)mSeg.get("36");
-        NodoD n3= (NodoD)mNod.get("3");
-        double x=n3.x+s36.n.x*1.2;
-        double y=n3.y+s36.n.y*1.2;
+        Segmento s = (Segmento) mSeg.get("5");
+        NodoD n3 = (NodoD) mNod.get("3");
+        double x = n3.x + s.n.x * 1.2;
+        double y = n3.y + s.n.y * 1.2;
 
         paint.setColor(Color.RED);
         canvas.drawCircle((float) (x + width / 2), (float) (-y + height / 2), 25, paint);
 
         //pinta pies
         paint.setColor(Color.BLACK);
-        NodoD npie=(NodoD)mNod.get("1");
+        NodoD npie = (NodoD) mNod.get("1");
         canvas.drawCircle((float) npie.x + width / 2, (float) (-npie.y + height / 2), 5, paint);
 
-        npie=(NodoD)mNod.get("5");
+        npie = (NodoD) mNod.get("5");
         canvas.drawCircle((float) npie.x + width / 2, (float) (-npie.y + height / 2), 5, paint);
+
+
+        //segmentos ficticios
+       paint.setColor(Color.LTGRAY);
+        for (Object oseg : mSeg.values()) {
+            Segmento seg = (Segmento) oseg;
+            if (seg.ficticio) {
+                canvas.drawLine((float) seg.na.x + width / 2, (float) (-seg.na.y + height / 2), (float) seg.nb.x + width / 2, (float) (-seg.nb.y + height / 2), paint);
+            }
+        }
     }
 
 }
